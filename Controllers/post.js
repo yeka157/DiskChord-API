@@ -68,14 +68,22 @@ module.exports = {
             res.status(500).send(error);
         }
     },
-    editPost : (req,res) => {
-
-    },
+    editPost : async(req,res) => {
+        try {
+            await dbQuery(`UPDATE post set text=${dbConf.escape(req.body.text)} where idPost = ${req.params.id};`);
+            res.status(200).send({
+                success : true
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
+    }, //done
     postDetails : async (req,res) => {
         try {
             let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username from post p
             JOIN users u ON u.idusers = p.user_id
-            where p.idPost = ${req.body.idPost};`);
+            where p.idPost = ${req.params.idPost};`);
             let temp = [];
             let data = await dbQuery(`Select * from likes where post_id=${dbConf.escape(results[0].idPost)};`);
             let reply = await dbQuery(`Select * from comments where post_id=${dbConf.escape(results[0].idPost)};`);
@@ -84,6 +92,9 @@ module.exports = {
         } catch (error) {
             res.status(500).send(error);
         }
+    },
+    getComment : async (req,res) => {
+
     }
 }
 

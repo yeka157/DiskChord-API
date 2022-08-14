@@ -6,10 +6,11 @@ const route = express.Router();
 
 const uploadFile = uploader('/imgTweet', 'IMGTWT').array('images',1);
 
-route.get('/all', postController.getData);
-route.get('/post', readToken, postController.getPost);
-route.post('/add', uploadFile, postController.addPost);
-route.delete('/delete/:idPost', postController.deletePost);
-route.post('/postDetails/:idPost', postController.postDetails);
+route.get('/all', postController.getData); // done
+route.get('/post', readToken, postController.getPost); // done
+route.post('/add', uploadFile, postController.addPost); // done
+route.get('/delete/:idPost', postController.deletePost); 
+route.get('/postDetails/:idPost', postController.postDetails); // done
+route.patch('/update/:id', postController.editPost); // done
 
 module.exports = route;
