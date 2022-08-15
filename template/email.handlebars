@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        html, body {
+            margin : 0;
+            padding : 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="display:flex; justify-content : center; align-items: center; height: 75vh; padding: 100px; background-color: aqua;">
+        <div style="height: 100%; width:100%; background-color: aliceblue;">
+            <div style="text-align: center; padding: 50px; margin:auto">
+                <img src="https://i.ibb.co/hRGMDF2/dochub-brands.png" alt="">
+                <h1 style="color:#3182CE; font-weight: 700; font-size: 50px;">DiskChord</h1>
+                <h3 style="color:#3182CE; font-weight: 700;">Welcome to our family, {{name}}!</h3>
+            </div>
+            <div style="text-align: center;">
+                <h5 style="font-size: 20px;">Verify Your Account</h5>
+                <button 
+                    style="background-color: #0088cc; color: #FFFFFF; font-weight: 700; height: 50px; width: 150px; border: none; padding : 10px 20px; text-align : center; border-radius:16px; cursor:pointer;"
+                    href={{link}}
+                    type="button"
+                >
+                    <a href={{link}} type="button" style="color:#FFFFFF; text-decoration: none">Verify Account</a>
+                </button>
+                <!-- <a class="btn btn-primary" type="button" href={{link}}>Verify Account</a> -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
