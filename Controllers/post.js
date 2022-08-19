@@ -127,6 +127,24 @@ module.exports = {
             console.log(error);
             res.status(500).send(error);
         }
+    },
+    getLikedPost : async(req,res) => {
+        try {
+            let sqlGet = await dbQuery(`Select likes.post_id from likes where user_id = ${dbConf.escape(req.dataToken.idusers)};`);
+            console.log(sqlGet);
+            let temp = [];
+            for (let i = 0; i<sqlGet.length; i++) {
+                let data = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username, u.user_profilepicture from post p
+                JOIN users u ON u.idusers = p.user_id
+                WHERE p.idPost = ${sqlGet[i].post_id};`);
+                let likes = await dbQuery(`Select * from likes where post_id = ${sqlGet[i].post_id};`);
+                let reply = await dbQuery(`Select * from comments where post_id = ${sqlGet[i].post_id};`);
+                temp.push({...data[0], likes : likes, comments : reply});
+            }
+            res.status(200).send(temp);
+        } catch (error) {
+            res.status(500).send(error);   
+        }
     }
 }
 

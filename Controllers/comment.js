@@ -43,7 +43,7 @@ module.exports  = {
             console.log(error);
             res.status(500).send(error);
         }
-    },
+    }, //done
     getAllComment : async(req,res) => {
         try {
             let result = await dbQuery(`Select c.idComments, c.date, c.text, c.post_id, u.idusers, u.name, u.username, u.user_profilepicture from comments c 
@@ -55,5 +55,5 @@ module.exports  = {
             console.log(error);
             res.status(500).send(error);
         }
-    }
+    } //done
 }

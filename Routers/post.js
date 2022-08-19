@@ -13,5 +13,6 @@ route.delete('/delete/:idPost', postController.deletePost); //done
 route.get('/postDetails/:idPost', postController.postDetails); // done
 route.patch('/update/:id', postController.editPost); // done
 route.post('/more', postController.morePost); //infinite scroll
-route.get('/allPost', postController.getAllPost);
+route.get('/allPost', postController.getAllPost); //done
+route.get('/liked', readToken, postController.getLikedPost);
 module.exports = route;
