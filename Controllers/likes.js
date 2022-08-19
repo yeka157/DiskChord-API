@@ -10,18 +10,22 @@ module.exports = {
                 res.status(200).send(results);
             })
     },
-    addLike : (req,res) => {
-        dbConf.query(`INSERT INTO likes
-        (post_id, user_id) values
-        ("${req.body.idPost}", "${req.body.user_id}");`,
-                (err,results) => {
-                    if (err) {
-                        res.status(500).send(err);
-                        console.log(err);
-                    }
-                    console.log(results);
-                    res.status(200).send({success:true});
-                })
+    addLike : async(req,res) => {
+        try {
+            dbConf.query(`INSERT INTO likes
+            (post_id, user_id) values
+            ("${req.body.idPost}", "${req.body.user_id}");`,
+                    (err,results) => {
+                        if (err) {
+                            res.status(500).send(err);
+                            console.log(err);
+                        }
+                        console.log(results);
+                        res.status(200).send({success:true});
+                    })
+        } catch (error) {
+            
+        }
     },
     unLike : async (req,res) => {
         try {
@@ -33,30 +37,5 @@ module.exports = {
             console.log(error);
             res.status(500).send(error);
         }
-    },
-    likeUnlike : (req,res) => {
-        dbConf.query(`Select likes.* from likes 
-        JOIN users ON users.idusers = likes.user_id
-        JOIN post ON post.idPost = likes.post_id
-        WHERE users.idusers = ${req.body.id}
-        AND post.idPost = ${req.body.idPost};`,
-            (err,results) => {
-                if (err) {
-                    res.status(500).send(err);
-                }
-                res.status(200).send(results);
-            })
-    },
-    newLike : (req,res) => {
-        dbConf.query(`INSERT INTO likes (post_id) values
-        (${dbConf.escape(req.body.idPost)});`,
-            (err,results) => {
-                if (err) {
-                    res.status(500).send(err);
-                    console.log(err);
-                }
-                console.log(results);
-                res.status(200).send({success:true});
-            })
     }
 }

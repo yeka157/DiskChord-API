@@ -4,9 +4,9 @@ const fs = require('fs');
 module.exports = {
     getData: async(req,res) => {
         try {
-            let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username from post p
+            let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username, u.user_profilepicture from post p
             JOIN users u ON u.idusers = p.user_id
-            order by p.date desc;`);
+            order by p.date desc limit 10 offset 0;`);
             let temp = [];
             for (let i=0; i<results.length; i++) {
                 let data = await dbQuery(`Select * from likes where post_id=${dbConf.escape(results[i].idPost)};`);
@@ -21,7 +21,7 @@ module.exports = {
     }, //done
     getPost: async(req,res) => {
         try {
-            let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username from post p
+            let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username, u.user_profilepicture from post p
             JOIN users u ON u.idusers = p.user_id
             where u.idusers = "${req.dataToken.idusers}"
             order by p.date desc;`);
@@ -67,7 +67,7 @@ module.exports = {
             console.log(error);
             res.status(500).send(error);
         }
-    },
+    }, //done
     editPost : async(req,res) => {
         try {
             await dbQuery(`UPDATE post set text=${dbConf.escape(req.body.text)} where idPost = ${req.params.id};`);
@@ -92,9 +92,41 @@ module.exports = {
         } catch (error) {
             res.status(500).send(error);
         }
-    },
-    getComment : async (req,res) => {
-
+    }, //done
+    morePost : async(req,res) => {
+        try {
+            let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username, u.user_profilepicture from post p 
+            JOIN users u ON u.idusers = p.user_id
+            order by p.date desc limit ${dbConf.escape(req.body.limit)} offset ${dbConf.escape(req.body.offset)}`);
+            let temp = [];
+            for (let i = 0; i<results.length; i++) {
+                let data = await dbQuery(`Select * from likes where post_id=${dbConf.escape(results[i].idPost)};`);
+                let reply = await dbQuery(`Select * from comments where post_id = ${dbConf.escape(results[i].idPost)};`);
+                temp.push({...results[i], likes : data, comments : reply});
+            }
+            res.status(200).send(temp);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
+        
+    }, //done infinite scroll
+    getAllPost : async (req,res) => {
+        try {
+            let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username, u.user_profilepicture from post p 
+            JOIN users u ON u.idusers = p.user_id
+            order by p.date desc;`);
+            let temp = [];
+            for (let i = 0; i<results.length; i++) {
+                let data = await dbQuery(`Select * from likes where post_id=${dbConf.escape(results[i].idPost)};`);
+                let reply = await dbQuery(`Select * from comments where post_id = ${dbConf.escape(results[i].idPost)};`);
+                temp.push({...results[i], likes : data, comments : reply});
+            }
+            res.status(200).send(temp);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
     }
 }
 
