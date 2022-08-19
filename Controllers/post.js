@@ -127,7 +127,7 @@ module.exports = {
             console.log(error);
             res.status(500).send(error);
         }
-    },
+    }, //done
     getLikedPost : async(req,res) => {
         try {
             let sqlGet = await dbQuery(`Select likes.post_id from likes where user_id = ${dbConf.escape(req.dataToken.idusers)};`);
@@ -145,13 +145,7 @@ module.exports = {
         } catch (error) {
             res.status(500).send(error);   
         }
-    }
+    } //done
 }
-
-
-// `Select p.*, u.name, u.username, count(likes.user_id) as totalLikes from post p 
-//         JOIN users u ON u.idusers = p.user_id 
-//         JOIN likes ON likes.post_id = p.idPost
-//         order by p.date desc;`
 
 

@@ -14,5 +14,5 @@ route.get('/postDetails/:idPost', postController.postDetails); // done
 route.patch('/update/:id', postController.editPost); // done
 route.post('/more', postController.morePost); //infinite scroll
 route.get('/allPost', postController.getAllPost); //done
-route.get('/liked', readToken, postController.getLikedPost);
+route.get('/liked', readToken, postController.getLikedPost); //done
 module.exports = route;

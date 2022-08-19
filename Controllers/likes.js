@@ -10,7 +10,7 @@ module.exports = {
                 }
                 res.status(200).send(results);
             })
-    },
+    }, //ga kepake
     addLike : async(req,res) => {
         try {
             let sqlGet = await dbQuery(`Select * from likes where post_id = ${dbConf.escape(req.body.idPost)} AND user_id = ${dbConf.escape(req.body.user_id)};`);
@@ -29,7 +29,7 @@ module.exports = {
             console.log(error);
             res.status(500).send(error);
         }
-    },
+    }, //done
     unLike : async (req,res) => {
         try {
             console.log(req.body);
@@ -41,5 +41,5 @@ module.exports = {
             console.log(error);
             res.status(500).send(error);
         }
-    }
+    } //ga kepake
 }
