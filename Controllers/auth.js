@@ -14,7 +14,7 @@ module.exports = {
                 console.log(results);
                 res.status(200).send(results);
             })
-    },
+    }, //unused
     register: async(req,res) => {
         try {
             const handlebarOptions = {

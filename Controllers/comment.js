@@ -10,17 +10,17 @@ module.exports  = {
                 res.status(200).send(results);
             })
     }, // ga dipake?
-    addComment : (req,res) => {
-        dbConf.query(`INSERT INTO comments (text, post_id, user_id) values
-        (${dbConf.escape(req.body.text)}, ${dbConf.escape(req.params.id)}, ${dbConf.escape(req.body.idusers)});`, 
-            (err,results) => {
-                if (err) {
-                    res.status(500).send(err);
-                }
-                res.status(200).send({
-                    success : true
-                });
-            })
+    addComment : async(req,res) => {
+        try {
+            let add = await dbQuery(`INSERT INTO comments (text, post_id, user_id) values
+            (${dbConf.escape(req.body.text)}, ${dbConf.escape(req.params.id)}, ${dbConf.escape(req.body.idusers)});`);
+            if (add.insertId) {
+                return res.status(200).send({success : true});
+            }
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
     }, //done
     getComment : async(req,res) => {
         try {

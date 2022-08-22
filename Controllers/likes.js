@@ -10,7 +10,7 @@ module.exports = {
                 }
                 res.status(200).send(results);
             })
-    }, //ga kepake
+    }, //unused
     addLike : async(req,res) => {
         try {
             let sqlGet = await dbQuery(`Select * from likes where post_id = ${dbConf.escape(req.body.idPost)} AND user_id = ${dbConf.escape(req.body.user_id)};`);
