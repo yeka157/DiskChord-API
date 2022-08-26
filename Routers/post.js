@@ -12,7 +12,7 @@ route.post('/add', uploadFile, postController.addPost);
 route.delete('/delete/:idPost', postController.deletePost);
 route.get('/postDetails/:idPost', postController.postDetails);
 route.patch('/update/:id', postController.editPost);
-route.post('/more', postController.morePost); //infinite scroll
+route.post('/more', postController.morePost);
 route.get('/allPost', postController.getAllPost);
 route.get('/liked', readToken, postController.getLikedPost);
 module.exports = route;

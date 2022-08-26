@@ -110,7 +110,7 @@ module.exports = {
             res.status(500).send(error);
         }
         
-    }, //done infinite scroll
+    },
     getAllPost : async (req,res) => {
         try {
             let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username, u.user_profilepicture from post p 
