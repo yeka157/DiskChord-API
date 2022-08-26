@@ -5,16 +5,6 @@ const hbs = require('nodemailer-express-handlebars');
 const path = require('path');
 const fs = require('fs');
 module.exports = {
-    getData: (req,res) => {
-        dbConf.query(`Select * from users;`,
-            (err,results) => {
-                if (err) {
-                    res.status(500).send(err);
-                }
-                console.log(results);
-                res.status(200).send(results);
-            })
-    }, //unused
     register: async(req,res) => {
         try {
             const handlebarOptions = {
@@ -55,7 +45,7 @@ module.exports = {
         } catch (error) {
             res.status(500).send(error);
         }
-    }, //done
+    },
     login: async(req,res) => {
         try {
             let data = await dbQuery(`Select * from users u WHERE ${req.body.email ? 'u.email' : 'u.username'} = ${req.body.email? dbConf.escape(req.body.email) : dbConf.escape(req.body.username)} and u.password=${dbConf.escape(hashPassword(req.body.password))};`);
@@ -69,7 +59,7 @@ module.exports = {
             console.log(error);
             res.status(500).send(error);
         }
-    }, //done
+    },
     keepLogin : async(req,res) => {
         try {
             let data = await dbQuery(`Select u.idusers, u.name, u.username, u.email, u.status, u.user_bio, u.user_profilepicture from users u where idusers = "${req.dataToken.idusers}";`);
@@ -78,7 +68,7 @@ module.exports = {
         } catch (error) {
             res.status(500).send(error);
         }
-    }, //done
+    },
     verify: async(req,res) => {
         try {
             // let result = await dbQuery(`Select * from token where jwt=${dbConf.escape(req.token)}`)
@@ -89,7 +79,7 @@ module.exports = {
         } catch (error) {
             res.status(500).send(error);
         }
-    }, //done
+    },
     getUsername : (req,res) => {
         dbConf.query(`Select users.username from users where username like "%${req.body.username}%";`, 
             (err,results) => {
@@ -98,7 +88,7 @@ module.exports = {
                 }
                 res.status(200).send(results)
             })
-    }, //done
+    },
     getEmail : (req,res) => {
         dbConf.query(`Select users.email from users where email like "${req.body.email}%";`, 
             (err,results) => {
@@ -107,7 +97,7 @@ module.exports = {
                 }
                 res.status(200).send(results);
             })
-    }, //done
+    },
     sendVerify : async(req,res) => {
         try {
             const handlebarOptions = {

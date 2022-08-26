@@ -18,7 +18,7 @@ module.exports = {
             res.status(500).send(error);
             console.log(error);
         }
-    }, //done
+    },
     getPost: async(req,res) => {
         try {
             let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username, u.user_profilepicture from post p
@@ -36,7 +36,7 @@ module.exports = {
             res.status(500).send(error);
             console.log(error);
         }
-    }, //done
+    },
     addPost : async(req,res) => {
         try {
             console.log(req.files);
@@ -58,7 +58,7 @@ module.exports = {
             fs.unlinkSync(`./public/imgTweet/${req.files[0].filename}`)
             res.status(500).send(error);
         }
-    }, //done
+    },
     deletePost : async (req,res) => {
         try {
             await dbQuery(`Delete from post where idPost=${req.params.idPost}`);
@@ -67,7 +67,7 @@ module.exports = {
             console.log(error);
             res.status(500).send(error);
         }
-    }, //done
+    },
     editPost : async(req,res) => {
         try {
             await dbQuery(`UPDATE post set text=${dbConf.escape(req.body.text)} where idPost = ${req.params.id};`);
@@ -78,10 +78,10 @@ module.exports = {
             console.log(error);
             res.status(500).send(error);
         }
-    }, //done
+    },
     postDetails : async (req,res) => {
         try {
-            let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username from post p
+            let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username, u.user_profilepicture from post p
             JOIN users u ON u.idusers = p.user_id
             where p.idPost = ${req.params.idPost};`);
             let temp = [];
@@ -92,7 +92,7 @@ module.exports = {
         } catch (error) {
             res.status(500).send(error);
         }
-    }, //done
+    },
     morePost : async(req,res) => {
         try {
             let results = await dbQuery(`Select p.idPost, p.user_id, p.date, p.image, p.text, u.name, u.username, u.user_profilepicture from post p 
@@ -127,7 +127,7 @@ module.exports = {
             console.log(error);
             res.status(500).send(error);
         }
-    }, //done
+    },
     getLikedPost : async(req,res) => {
         try {
             let sqlGet = await dbQuery(`Select likes.post_id from likes where user_id = ${dbConf.escape(req.dataToken.idusers)};`);
@@ -145,7 +145,7 @@ module.exports = {
         } catch (error) {
             res.status(500).send(error);   
         }
-    } //done
+    } 
 }
 
 

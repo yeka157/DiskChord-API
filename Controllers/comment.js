@@ -1,15 +1,6 @@
 const { dbConf, dbQuery } = require("../config/db");
 
 module.exports  = {
-    getData : (req,res) => {
-        dbConf.query(`Select * from comments;`,
-            (err,results) => {
-                if (err) {
-                    res.status(500).send(err);
-                }
-                res.status(200).send(results);
-            })
-    }, // ga dipake?
     addComment : async(req,res) => {
         try {
             let add = await dbQuery(`INSERT INTO comments (text, post_id, user_id) values
@@ -21,7 +12,7 @@ module.exports  = {
             console.log(error);
             res.status(500).send(error);
         }
-    }, //done
+    },
     getComment : async(req,res) => {
         try {
             let result = await dbQuery(`Select c.idComments, c.date, c.text, c.post_id, u.idusers, u.name, u.username, u.user_profilepicture from comments c 
@@ -32,7 +23,7 @@ module.exports  = {
             console.log(error);
             res.status(500).send(error);
         }
-    }, //done
+    },
     getMoreComment : async(req,res) => {
         try {
             let result = await dbQuery(`Select c.idComments, c.date, c.text, c.post_id, u.idusers, u.name, u.username, u.user_profilepicture from comments c 
@@ -55,5 +46,5 @@ module.exports  = {
             console.log(error);
             res.status(500).send(error);
         }
-    } //done
+    }
 }
